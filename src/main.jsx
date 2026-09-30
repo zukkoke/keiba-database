@@ -46,6 +46,7 @@ function loadRaces() {
 function App() {
   const [races, setRaces] = useState(loadRaces)
   const [favorites, setFavorites] = useState(loadFavorites)
+  console.log('現在のfavorites:', favorites)
   const [horseProfiles, setHorseProfiles] = useState(loadHorseProfiles)
   const [page, setPage] = useState('home')
   const [query, setQuery] = useState('')
@@ -474,9 +475,9 @@ function App() {
             onSave={saveRaces}
             onExport={exportJson}
             onImport={importJson}
-            onReset={resetLocalData}
-          />
-        )} 
+          onReset={resetLocalData}
+  />
+)} 
 
       </main>
 
