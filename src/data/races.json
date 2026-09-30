@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "race_date": "2026-09-27",
+    "race_name": "スプリンターズS",
+    "racecourse": "中山",
+    "race_number": 11,
+    "pace": "ハイ",
+    "ground": "稍重",
+    "bias": "前有利",
+    "race_memo": "前半が速く、前にいた馬が残る展開。後方からの馬には厳しいレースだった。",
+    "horses": [
+      {
+        "horse_name": "サヴォアテール",
+        "weight": 55,
+        "finish": 5,
+        "memo": "後方から。前が止まらない展開で届かなかった。"
+      },
+      {
+        "horse_name": "アウダーシア",
+        "weight": 57,
+        "finish": 8,
+        "memo": "前有利の展開。直線で伸び切れず。"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "race_date": "2026-09-13",
+    "race_name": "セントウルS",
+    "racecourse": "中京",
+    "race_number": 11,
+    "pace": "ミドル",
+    "ground": "良",
+    "bias": "内有利",
+    "race_memo": "内を立ち回った馬が有利な展開。",
+    "horses": [
+      {
+        "horse_name": "サヴォアテール",
+        "weight": 55,
+        "finish": 3,
+        "memo": "外を回して伸びた。内容は悪くない。"
+      }
+    ]
+  }
+]

@@ -1,0 +1,835 @@
+:root {
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  color: #111827;
+  background: #f5f5f4;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f5f5f4;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+/* =========================
+   Header
+========================= */
+
+.topbar {
+  height: 68px;
+  background: #111827;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 max(20px, calc((100% - 1120px) / 2));
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.brandButton {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  text-align: left;
+}
+
+.brand {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+}
+
+.logo {
+  font-size: 28px;
+}
+
+.brand strong {
+  display: block;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+}
+
+.brand small {
+  display: block;
+  color: #9ca3af;
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+/* =========================
+   Common
+========================= */
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  font-weight: 800;
+  color: #6b7280;
+  margin: 0 0 10px;
+}
+
+.content {
+  max-width: 1120px;
+  margin: auto;
+  padding: 35px 20px 70px;
+}
+
+.backButton {
+  border: 0;
+  background: transparent;
+  color: #6b7280;
+  padding: 0;
+  margin-bottom: 30px;
+  font-size: 13px;
+}
+
+.backButton:hover {
+  color: #111827;
+}
+
+.sectionHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 15px;
+}
+
+.sectionHead h2 {
+  margin: 0;
+  font-size: 25px;
+  letter-spacing: -0.03em;
+}
+
+.sectionHead > span {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.empty {
+  padding: 25px;
+  border: 1px dashed #d1d5db;
+  border-radius: 14px;
+  color: #6b7280;
+  background: #fff;
+  text-align: center;
+}
+
+/* =========================
+   Home
+========================= */
+
+.homeHero {
+  max-width: 1120px;
+  margin: auto;
+  padding: 72px 20px 45px;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 6vw, 68px);
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+  margin: 0;
+}
+
+.hero h1 span {
+  color: #6b7280;
+}
+
+.lead {
+  color: #6b7280;
+  max-width: 530px;
+  line-height: 1.7;
+  margin-top: 20px;
+}
+
+.homeActions {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.mainChoice {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  width: 100%;
+  border-radius: 18px;
+  padding: 23px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #111827;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.mainChoice:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+}
+
+.choiceIcon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #f3f4f6;
+  font-size: 25px;
+  flex-shrink: 0;
+}
+
+.mainChoice div {
+  flex: 1;
+}
+
+.mainChoice strong {
+  display: block;
+  font-size: 17px;
+}
+
+.mainChoice small {
+  display: block;
+  color: #6b7280;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.arrow {
+  font-size: 27px;
+  color: #9ca3af;
+  line-height: 1;
+}
+
+.homeStats {
+  max-width: 1120px;
+  margin: 28px auto 0;
+  padding: 0 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.stats div {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 14px 20px;
+  min-width: 110px;
+}
+
+.stats b {
+  display: block;
+  font-size: 24px;
+}
+
+.stats span {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* =========================
+   Search
+========================= */
+
+.searchPage {
+  padding-top: 35px;
+}
+
+.searchPanel {
+  margin-bottom: 28px;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+  padding: 0 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.searchBox span {
+  font-size: 26px;
+  color: #9ca3af;
+}
+
+.searchBox input {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  font-size: 17px;
+  padding: 15px 0;
+  background: transparent;
+}
+
+.searchResults {
+  display: grid;
+  gap: 10px;
+}
+
+.resultCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 15px;
+  padding: 16px;
+  color: #111827;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.resultCard:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+}
+
+.resultIcon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: #f3f4f6;
+  border-radius: 12px;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.resultCard div {
+  flex: 1;
+}
+
+.resultCard strong {
+  display: block;
+  font-size: 15px;
+}
+
+.resultCard small {
+  display: block;
+  color: #9ca3af;
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+/* =========================
+   Horse detail
+========================= */
+
+.detailHeader {
+  margin-bottom: 28px;
+}
+
+.detailHeader h2 {
+  margin: 0;
+  font-size: clamp(27px, 5vw, 40px);
+  letter-spacing: -0.04em;
+}
+
+.detailHeader > span {
+  display: block;
+  margin-top: 8px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.raceList {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.raceCard {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.raceLink {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  width: 100%;
+  color: #111827;
+  text-align: left;
+}
+
+.raceTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.date {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.raceCard h3 {
+  font-size: 18px;
+  margin: 5px 0 0;
+}
+
+.raceCard small {
+  color: #6b7280;
+}
+
+.finish {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 15px 0 12px;
+}
+
+.tags span {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 9px;
+  font-size: 11px;
+  color: #4b5563;
+}
+
+.raceCard p {
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0;
+  color: #4b5563;
+}
+
+/* =========================
+   Race detail
+========================= */
+
+.raceDetail {
+  max-width: 900px;
+}
+
+.raceInfo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.raceInfo div {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 15px;
+}
+
+.raceInfo small {
+  display: block;
+  color: #9ca3af;
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.raceInfo strong {
+  font-size: 16px;
+}
+
+.memoBox {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.memoBox p:last-child {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.runnerList {
+  display: grid;
+  gap: 10px;
+}
+
+.runnerCard {
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  column-gap: 14px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.runnerFinish {
+  grid-row: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.runnerFinish small {
+  font-size: 10px;
+  margin-left: 2px;
+}
+
+.runnerName {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  color: #111827;
+}
+
+.runnerName strong {
+  font-size: 15px;
+}
+
+.runnerName span {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.runnerCard p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* =========================
+   Footer
+========================= */
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 700px) {
+  .topbar {
+    padding: 0 15px;
+  }
+
+  .homeHero {
+    padding: 45px 15px 35px;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+  }
+
+  .lead {
+    font-size: 14px;
+  }
+
+  .homeActions {
+    grid-template-columns: 1fr;
+    padding: 0 15px;
+  }
+
+  .homeStats {
+    padding: 0 15px;
+  }
+
+  .content {
+    padding: 25px 15px 60px;
+  }
+
+  .raceList {
+    grid-template-columns: 1fr;
+  }
+
+  .raceInfo {
+    grid-template-columns: 1fr;
+  }
+
+  .detailHeader h2 {
+    font-size: 29px;
+  }
+
+  .mainChoice {
+    padding: 19px;
+  }
+}
+
+/* =========================
+   Admin Page
+========================= */
+
+.adminPage {
+  padding-bottom: 60px;
+}
+
+.adminBtn {
+  border: 0;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  padding: 9px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.adminBtn:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.adminCard {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 18px;
+  padding: 22px;
+  margin-top: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+.adminCard h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.adminGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.adminGrid label,
+.fullField {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+.adminGrid input,
+.adminGrid select,
+.fullField textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 11px 12px;
+  font-size: 15px;
+  color: #222;
+  outline: none;
+  transition: 0.2s;
+}
+
+.adminGrid input:focus,
+.adminGrid select:focus,
+.fullField textarea:focus {
+  border-color: #999;
+  background: #fff;
+}
+
+.fullField {
+  margin-top: 18px;
+}
+
+.fullField textarea {
+  resize: vertical;
+  min-height: 90px;
+  font-family: inherit;
+}
+
+.adminCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.secondaryBtn {
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #333;
+  padding: 9px 13px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.secondaryBtn:hover {
+  background: #f5f5f5;
+}
+
+.adminHorseList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.adminHorse {
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  padding: 16px;
+  background: #fafafa;
+}
+
+.adminHorseHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.adminHorseHeader strong {
+  font-size: 14px;
+}
+
+.deleteBtn {
+  border: 0;
+  background: transparent;
+  color: #b44;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.horseGrid {
+  margin-top: 14px;
+}
+
+.horseNameField {
+  grid-column: span 2;
+}
+
+.adminActions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+.adminSaveBtn {
+  flex: 1;
+  min-width: 220px;
+}
+
+.adminNotice {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: #f7f7f7;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.adminNotice strong {
+  color: #333;
+}
+
+.adminNotice p {
+  margin: 6px 0 0;
+}
+
+
+/* =========================
+   Admin Mobile
+========================= */
+
+@media (max-width: 700px) {
+
+  .adminCard {
+    padding: 16px;
+    border-radius: 15px;
+  }
+
+  .adminGrid {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+
+  .horseNameField {
+    grid-column: span 1;
+  }
+
+  .adminCardHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .adminCardHeader .secondaryBtn {
+    width: 100%;
+  }
+
+  .adminActions {
+    flex-direction: column;
+  }
+
+  .adminActions button {
+    width: 100%;
+  }
+
+  .adminSaveBtn {
+    min-width: 0;
+  }
+
+  .adminBtn {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
