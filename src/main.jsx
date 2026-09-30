@@ -5,23 +5,7 @@ import initialHorseProfiles from './data/horseProfiles.json'
 import initialFavorites from './data/favorites.json'
 import './styles.css'
 
-const STORAGE_KEY = 'keiba_database_races'
-
-const FAVORITES_KEY = 'keiba_database_favorites'
-
-const HORSE_PROFILES_KEY = 'keiba_database_horse_profiles'
-
 function loadHorseProfiles() {
-  try {
-    const saved = localStorage.getItem(HORSE_PROFILES_KEY)
-
-    if (saved) {
-      return JSON.parse(saved)
-    }
-  } catch (error) {
-    console.error('馬プロフィール読み込みエラー:', error)
-  }
-
   return initialHorseProfiles
 }
 
@@ -30,23 +14,12 @@ function loadFavorites() {
 }
 
 function loadRaces() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY)
-
-    if (saved) {
-      return JSON.parse(saved)
-    }
-  } catch (error) {
-    console.error('データ読み込みエラー:', error)
-  }
-
   return initialRaces
 }
 
 function App() {
   const [races, setRaces] = useState(loadRaces)
   const [favorites, setFavorites] = useState(loadFavorites)
-  console.log('現在のfavorites:', favorites)
   const [horseProfiles, setHorseProfiles] = useState(loadHorseProfiles)
   const [page, setPage] = useState('home')
   const [query, setQuery] = useState('')
@@ -135,11 +108,6 @@ function App() {
 
   function saveRaces(newRaces) {
     setRaces(newRaces)
-
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(newRaces)
-    )
   }
 
   function toggleFavorite(horse) {
@@ -149,24 +117,17 @@ function App() {
           return name !== horse
         })
       }
-  
+
       return [...prev, horse]
     })
   }
 
   function saveHorseProfile(horse, memo) {
     setHorseProfiles(function (prev) {
-      const next = {
+      return {
         ...prev,
         [horse]: memo
       }
-  
-      localStorage.setItem(
-        'keiba_database_horse_profiles',
-        JSON.stringify(next)
-      )
-  
-      return next
     })
   }
 
@@ -184,6 +145,50 @@ function App() {
 
     link.href = url
     link.download = 'races.json'
+
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+
+    URL.revokeObjectURL(url)
+  }
+
+  function exportFavoritesJson() {
+    const json = JSON.stringify(favorites, null, 2)
+
+    const blob = new Blob(
+      [json],
+      { type: 'application/json' }
+    )
+
+    const url = URL.createObjectURL(blob)
+
+    const link = document.createElement('a')
+
+    link.href = url
+    link.download = 'favorites.json'
+
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+
+    URL.revokeObjectURL(url)
+  }
+
+  function exportHorseProfilesJson() {
+    const json = JSON.stringify(horseProfiles, null, 2)
+
+    const blob = new Blob(
+      [json],
+      { type: 'application/json' }
+    )
+
+    const url = URL.createObjectURL(blob)
+
+    const link = document.createElement('a')
+
+    link.href = url
+    link.download = 'horseProfiles.json'
 
     document.body.appendChild(link)
     link.click()
@@ -251,14 +256,12 @@ function App() {
 
   function resetLocalData() {
     const confirmed = window.confirm(
-      'このブラウザに保存されているデータを削除して、races.jsonの初期データに戻しますか？'
+      '現在の画面データを初期状態に戻しますか？'
     )
 
     if (!confirmed) {
       return
     }
-
-    localStorage.removeItem(STORAGE_KEY)
 
     setRaces(initialRaces)
 
@@ -296,7 +299,15 @@ function App() {
         <button
           className="adminBtn"
           onClick={function () {
-            setPage('admin')
+            const password = window.prompt(
+              '管理者パスワードを入力してください'
+            )
+
+            if (password === 'keiba-admin') {
+              setPage('admin')
+            } else if (password !== null) {
+              window.alert('パスワードが違います。')
+            }
           }}
         >
           ⚙ 管理
@@ -471,13 +482,16 @@ function App() {
           <AdminPage
             races={races}
             favorites={favorites}
+            horseProfiles={horseProfiles}
             onBack={goHome}
             onSave={saveRaces}
             onExport={exportJson}
+            onExportFavorites={exportFavoritesJson}
+            onExportHorseProfiles={exportHorseProfilesJson}
             onImport={importJson}
-          onReset={resetLocalData}
-  />
-)} 
+            onReset={resetLocalData}
+          />
+        )}
 
       </main>
 
@@ -571,60 +585,60 @@ function Home(props) {
 
       </div>
 
-{props.favorites.length > 0 && (
-  <div className="favoriteSection">
+      {props.favorites.length > 0 && (
+        <div className="favoriteSection">
 
-    <div className="sectionHead">
+          <div className="sectionHead">
 
-      <div>
-        <p className="eyebrow">
-          FAVORITES
-        </p>
+            <div>
+              <p className="eyebrow">
+                FAVORITES
+              </p>
 
-        <h2>
-          ⭐ お気に入り馬
-        </h2>
-      </div>
-
-      <span>
-        {props.favorites.length}頭
-      </span>
-
-    </div>
-
-    <div className="favoriteList">
-
-      {props.favorites.map(function (horse) {
-
-        return (
-          <button
-            className="favoriteHorse"
-            key={horse}
-            onClick={function () {
-              props.onFavoriteHorse(horse)
-            }}
-          >
+              <h2>
+                ⭐ お気に入り馬
+              </h2>
+            </div>
 
             <span>
-              ★
+              {props.favorites.length}頭
             </span>
 
-            <strong>
-              {horse}
-            </strong>
+          </div>
 
-            <span className="arrow">
-              ›
-            </span>
+          <div className="favoriteList">
 
-          </button>
-        )
-      })}
+            {props.favorites.map(function (horse) {
 
-    </div>
+              return (
+                <button
+                  className="favoriteHorse"
+                  key={horse}
+                  onClick={function () {
+                    props.onFavoriteHorse(horse)
+                  }}
+                >
 
-  </div>
-)}      
+                  <span>
+                    ★
+                  </span>
+
+                  <strong>
+                    {horse}
+                  </strong>
+
+                  <span className="arrow">
+                    ›
+                  </span>
+
+                </button>
+              )
+            })}
+
+          </div>
+
+        </div>
+      )}
 
       <div className="stats homeStats">
 
@@ -720,7 +734,9 @@ function SearchPage(props) {
 
 function HorsePage(props) {
 
-  const [profileMemo, setProfileMemo] = useState(props.horseProfile)
+  const [profileMemo, setProfileMemo] = useState(
+    props.horseProfile
+  )
 
   const sortedRaces = [...props.races].sort(
     function (a, b) {
@@ -751,49 +767,58 @@ function HorsePage(props) {
         </h2>
 
         <button
-          className={props.favorite ? 'favoriteButton active' : 'favoriteButton'}
-            onClick={function () {
+          className={
+            props.favorite
+              ? 'favoriteButton active'
+              : 'favoriteButton'
+          }
+          onClick={function () {
             props.onFavorite(props.horse)
-            }}
-        >  
-          {props.favorite ? '★ お気に入り' : '☆ お気に入り登録'}
+          }}
+        >
+          {props.favorite
+            ? '★ お気に入り'
+            : '☆ お気に入り登録'}
         </button>
 
         <div className="horseProfile">
 
-  <div className="horseProfileHeader">
+          <div className="horseProfileHeader">
 
-    <div>
-      <p className="eyebrow">
-        HORSE PROFILE
-      </p>
+            <div>
+              <p className="eyebrow">
+                HORSE PROFILE
+              </p>
 
-      <h3>
-        📝 馬の特徴・メモ
-      </h3>
-    </div>
+              <h3>
+                📝 馬の特徴・メモ
+              </h3>
+            </div>
 
-  </div>
+          </div>
 
-  <textarea
-    value={profileMemo}
-    onChange={function (event) {
-      setProfileMemo(event.target.value)
-    }}
-    placeholder="この馬の特徴や評価をメモ..."
-    rows="5"
-  />
+          <textarea
+            value={profileMemo}
+            onChange={function (event) {
+              setProfileMemo(event.target.value)
+            }}
+            placeholder="この馬の特徴や評価をメモ..."
+            rows="5"
+          />
 
-  <button
-    className="profileSaveButton"
-    onClick={function () {
-      props.onSaveProfile(props.horse, profileMemo)
-    }}
-  >
-    メモを保存
-  </button>
+          <button
+            className="profileSaveButton"
+            onClick={function () {
+              props.onSaveProfile(
+                props.horse,
+                profileMemo
+              )
+            }}
+          >
+            メモを保存
+          </button>
 
-</div>
+        </div>
 
         <span>
           {props.races.length} records
@@ -1114,27 +1139,6 @@ function RacePage(props) {
 
 function AdminPage(props) {
 
-  function exportFavoritesJson() {
-    const blob = new Blob(
-      [JSON.stringify(props.favorites, null, 2)],
-      {
-        type: 'application/json'
-      }
-    )
-
-    const url = URL.createObjectURL(blob)
-
-    const link = document.createElement('a')
-    link.href = url
-    link.download = 'favorites.json'
-
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-
-    URL.revokeObjectURL(url)
-  }
-
   const emptyHorse = {
     frame: '',
     number: '',
@@ -1160,6 +1164,11 @@ function AdminPage(props) {
   const [horses, setHorses] = useState([
     { ...emptyHorse }
   ])
+
+  // 登録済みレース検索
+  const [registeredRaceQuery, setRegisteredRaceQuery] = useState('')
+  const [registeredRaceDate, setRegisteredRaceDate] = useState('')
+  const [registeredRacecourse, setRegisteredRacecourse] = useState('')
 
   function addHorse() {
     setHorses(function (prev) {
@@ -1274,6 +1283,145 @@ function AdminPage(props) {
     ])
   }
 
+  // レース1件削除
+  function deleteRace(raceId) {
+
+    const race = props.races.find(function (item) {
+      return item.id === raceId
+    })
+
+    if (!race) {
+      return
+    }
+
+    const confirmed = window.confirm(
+      '「' +
+      race.race_name +
+      '」を削除しますか？\n\n' +
+      'このレースに登録されている出走馬もすべて削除されます。'
+    )
+
+    if (!confirmed) {
+      return
+    }
+
+    const newRaces = props.races.filter(
+      function (item) {
+        return item.id !== raceId
+      }
+    )
+
+    props.onSave(newRaces)
+
+    alert('レースを削除しました。')
+  }
+
+  // レース内の馬1頭削除
+  function deleteRegisteredHorse(raceId, horseIndex) {
+
+    const race = props.races.find(function (item) {
+      return item.id === raceId
+    })
+
+    if (!race) {
+      return
+    }
+
+    const horse = race.horses[horseIndex]
+
+    if (!horse) {
+      return
+    }
+
+    const confirmed = window.confirm(
+      '「' +
+      horse.horse_name +
+      '」をこのレースから削除しますか？'
+    )
+
+    if (!confirmed) {
+      return
+    }
+
+    const newHorses = race.horses.filter(
+      function (_, index) {
+        return index !== horseIndex
+      }
+    )
+
+    const newRaces = props.races.map(
+      function (item) {
+
+        if (item.id !== raceId) {
+          return item
+        }
+
+        return {
+          ...item,
+          horses: newHorses
+        }
+      }
+    )
+
+    props.onSave(newRaces)
+
+    alert(
+      horse.horse_name +
+      'をレースから削除しました。'
+    )
+  }
+
+  // 登録済みレースを検索
+  const filteredRegisteredRaces = props.races.filter(
+    function (race) {
+
+      const query = registeredRaceQuery
+        .trim()
+        .toLowerCase()
+
+      const raceText = (
+        String(race.race_name || '') +
+        ' ' +
+        String(race.racecourse || '') +
+        ' ' +
+        String(race.race_number || '')
+      ).toLowerCase()
+
+      const matchesQuery =
+        !query ||
+        raceText.includes(query)
+
+      const matchesDate =
+        !registeredRaceDate ||
+        String(race.race_date || '') === registeredRaceDate
+
+      const matchesCourse =
+        !registeredRacecourse ||
+        String(race.racecourse || '')
+          .toLowerCase()
+          .includes(
+            registeredRacecourse.trim().toLowerCase()
+          )
+
+      return (
+        matchesQuery &&
+        matchesDate &&
+        matchesCourse
+      )
+    }
+  )
+
+  const hasRegisteredRaceFilter =
+    registeredRaceQuery.trim() !== '' ||
+    registeredRaceDate !== '' ||
+    registeredRacecourse.trim() !== ''
+
+  function clearRegisteredRaceSearch() {
+    setRegisteredRaceQuery('')
+    setRegisteredRaceDate('')
+    setRegisteredRacecourse('')
+  }
+
   return (
     <section className="content adminPage">
 
@@ -1300,6 +1448,11 @@ function AdminPage(props) {
 
       </div>
 
+
+      {/* =========================
+          レース登録
+      ========================= */}
+
       <div className="adminCard">
 
         <h3>
@@ -1310,6 +1463,7 @@ function AdminPage(props) {
 
           <label>
             開催日
+
             <input
               type="date"
               value={raceDate}
@@ -1321,6 +1475,7 @@ function AdminPage(props) {
 
           <label>
             競馬場
+
             <input
               value={racecourse}
               onChange={function (e) {
@@ -1332,6 +1487,7 @@ function AdminPage(props) {
 
           <label>
             レース番号
+
             <input
               type="number"
               value={raceNumber}
@@ -1344,6 +1500,7 @@ function AdminPage(props) {
 
           <label>
             レース名
+
             <input
               value={raceName}
               onChange={function (e) {
@@ -1355,6 +1512,7 @@ function AdminPage(props) {
 
           <label>
             コース
+
             <select
               value={course}
               onChange={function (e) {
@@ -1373,6 +1531,7 @@ function AdminPage(props) {
 
           <label>
             距離
+
             <input
               type="number"
               value={distance}
@@ -1385,6 +1544,7 @@ function AdminPage(props) {
 
           <label>
             天候
+
             <input
               value={weather}
               onChange={function (e) {
@@ -1396,6 +1556,7 @@ function AdminPage(props) {
 
           <label>
             馬場
+
             <input
               value={ground}
               onChange={function (e) {
@@ -1407,6 +1568,7 @@ function AdminPage(props) {
 
           <label>
             ペース
+
             <input
               value={pace}
               onChange={function (e) {
@@ -1418,6 +1580,7 @@ function AdminPage(props) {
 
           <label>
             馬場バイアス
+
             <input
               value={bias}
               onChange={function (e) {
@@ -1446,6 +1609,10 @@ function AdminPage(props) {
       </div>
 
 
+      {/* =========================
+          出走馬登録
+      ========================= */}
+
       <div className="adminCard">
 
         <div className="adminCardHeader">
@@ -1455,6 +1622,7 @@ function AdminPage(props) {
           </h3>
 
           <button
+            type="button"
             className="secondaryBtn"
             onClick={addHorse}
           >
@@ -1481,6 +1649,7 @@ function AdminPage(props) {
 
                   {horses.length > 1 && (
                     <button
+                      type="button"
                       className="deleteBtn"
                       onClick={function () {
                         removeHorse(index)
@@ -1622,9 +1791,14 @@ function AdminPage(props) {
       </div>
 
 
+      {/* =========================
+          保存・JSON
+      ========================= */}
+
       <div className="adminActions">
 
         <button
+          type="button"
           className="primary adminSaveBtn"
           onClick={saveRace}
         >
@@ -1632,6 +1806,7 @@ function AdminPage(props) {
         </button>
 
         <button
+          type="button"
           className="secondaryBtn"
           onClick={props.onExport}
         >
@@ -1650,6 +1825,7 @@ function AdminPage(props) {
         </label>
 
         <button
+          type="button"
           className="secondaryBtn resetBtn"
           onClick={props.onReset}
         >
@@ -1658,12 +1834,286 @@ function AdminPage(props) {
 
         <button
           type="button"
-          onClick={exportFavoritesJson}
+          className="secondaryBtn"
+          onClick={props.onExportFavorites}
         >
           ⭐ お気に入りを書き出す
         </button>
 
+        <button
+          type="button"
+          className="secondaryBtn"
+          onClick={props.onExportHorseProfiles}
+        >
+          📝 馬プロフィールを書き出す
+        </button>
+
       </div>
+
+
+      {/* =========================
+          登録済みレース
+      ========================= */}
+
+      <div className="adminCard">
+
+        <div className="adminCardHeader">
+
+          <div>
+
+            <h3>
+              登録済みレース
+            </h3>
+
+            <span>
+              {props.races.length} レース登録
+            </span>
+
+          </div>
+
+          {hasRegisteredRaceFilter && (
+            <button
+              type="button"
+              className="secondaryBtn"
+              onClick={clearRegisteredRaceSearch}
+            >
+              検索をクリア
+            </button>
+          )}
+
+        </div>
+
+
+        {/* レース検索 */}
+
+        <div className="registeredRaceSearch">
+
+          <label>
+            レース名・競馬場・番号
+
+            <input
+              value={registeredRaceQuery}
+              onChange={function (e) {
+                setRegisteredRaceQuery(
+                  e.target.value
+                )
+              }}
+              placeholder="例：スプリンターズS / 中山 / 11"
+            />
+          </label>
+
+          <label>
+            開催日
+
+            <input
+              type="date"
+              value={registeredRaceDate}
+              onChange={function (e) {
+                setRegisteredRaceDate(
+                  e.target.value
+                )
+              }}
+            />
+          </label>
+
+          <label>
+            競馬場
+
+            <input
+              value={registeredRacecourse}
+              onChange={function (e) {
+                setRegisteredRacecourse(
+                  e.target.value
+                )
+              }}
+              placeholder="中山"
+            />
+          </label>
+
+        </div>
+
+
+        <div className="registeredRaceSearchResult">
+
+          {props.races.length > 0 && (
+            <p>
+              {filteredRegisteredRaces.length} / {props.races.length} レース表示
+            </p>
+          )}
+
+        </div>
+
+
+        {props.races.length === 0 ? (
+
+          <div className="empty">
+            登録されているレースはありません。
+          </div>
+
+        ) : filteredRegisteredRaces.length === 0 ? (
+
+          <div className="empty">
+            条件に一致するレースがありません。
+          </div>
+
+        ) : (
+
+          <div className="registeredRaceList">
+
+            {filteredRegisteredRaces.map(function (race) {
+
+              return (
+                <details
+                  className="registeredRace"
+                  key={race.id}
+                >
+
+                  <summary>
+
+                    <div>
+
+                      <strong>
+                        {race.race_date}{'　'}
+                        {race.racecourse}{' '}
+                        {race.race_number || '-'}R
+                      </strong>
+
+                      <span>
+                        {race.race_name}
+                      </span>
+
+                    </div>
+
+                    <span>
+                      {race.horses.length}頭
+                    </span>
+
+                  </summary>
+
+
+                  <div className="registeredRaceBody">
+
+                    <div className="registeredRaceInfo">
+
+                      <span>
+                        {race.course || '-'}
+                      </span>
+
+                      <span>
+                        {race.distance
+                          ? String(race.distance) + 'm'
+                          : '-'}
+                      </span>
+
+                      <span>
+                        天候：{race.weather || '-'}
+                      </span>
+
+                      <span>
+                        馬場：{race.ground || '-'}
+                      </span>
+
+                      <span>
+                        ペース：{race.pace || '-'}
+                      </span>
+
+                      <span>
+                        バイアス：{race.bias || '-'}
+                      </span>
+
+                    </div>
+
+
+                    <button
+                      type="button"
+                      className="deleteBtn"
+                      onClick={function () {
+                        deleteRace(race.id)
+                      }}
+                    >
+                      🗑️ このレースを削除
+                    </button>
+
+
+                    <div className="registeredHorseList">
+
+                      {race.horses.length === 0 ? (
+
+                        <div className="empty">
+                          出走馬が登録されていません。
+                        </div>
+
+                      ) : (
+
+                        race.horses.map(
+                          function (horse, index) {
+
+                            return (
+                              <div
+                                className="registeredHorse"
+                                key={
+                                  String(race.id) +
+                                  '-' +
+                                  String(index)
+                                }
+                              >
+
+                                <div>
+
+                                  <strong>
+                                    {horse.frame || '-'}枠{'　'}
+                                    {horse.number || '-'}番{'　'}
+                                    {horse.horse_name}
+                                  </strong>
+
+                                  <small>
+                                    {horse.jockey || '-'}{'　'}
+
+                                    {horse.weight
+                                      ? String(horse.weight) + 'kg'
+                                      : '-'}{'　'}
+
+                                    {horse.finish
+                                      ? String(horse.finish) + '着'
+                                      : '-'}
+                                  </small>
+
+                                </div>
+
+                                <button
+                                  type="button"
+                                  className="deleteBtn"
+                                  onClick={function () {
+                                    deleteRegisteredHorse(
+                                      race.id,
+                                      index
+                                    )
+                                  }}
+                                >
+                                  🗑️ 馬を削除
+                                </button>
+
+                              </div>
+                            )
+                          }
+                        )
+
+                      )}
+
+                    </div>
+
+                  </div>
+
+                </details>
+              )
+            })}
+
+          </div>
+
+        )}
+
+      </div>
+
 
       <div className="adminNotice">
 
@@ -1672,8 +2122,8 @@ function AdminPage(props) {
         </strong>
 
         <p>
-          「保存」を押すと、このPCのブラウザにデータが保存されます。
-          「races.jsonを書き出す」で最新データをファイルとして保存できます。
+          この画面での変更は、このブラウザを開いている間だけ反映されます。
+          共有データとして保存する場合は、JSONを書き出してGitHubのファイルを更新してください。
         </p>
 
       </div>
@@ -1683,8 +2133,6 @@ function AdminPage(props) {
 }
 
 
-createRoot(
-  document.getElementById('root')
-).render(
+createRoot(document.getElementById('root')).render(
   <App />
 )
