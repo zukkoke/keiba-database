@@ -1,9 +1,33 @@
 import React, { useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import initialRaces from './data/races.json'
+import initialHorseProfiles from './data/horseProfiles.json'
+import initialFavorites from './data/favorites.json'
 import './styles.css'
 
 const STORAGE_KEY = 'keiba_database_races'
+
+const FAVORITES_KEY = 'keiba_database_favorites'
+
+const HORSE_PROFILES_KEY = 'keiba_database_horse_profiles'
+
+function loadHorseProfiles() {
+  try {
+    const saved = localStorage.getItem(HORSE_PROFILES_KEY)
+
+    if (saved) {
+      return JSON.parse(saved)
+    }
+  } catch (error) {
+    console.error('馬プロフィール読み込みエラー:', error)
+  }
+
+  return initialHorseProfiles
+}
+
+function loadFavorites() {
+  return initialFavorites
+}
 
 function loadRaces() {
   try {
@@ -21,6 +45,8 @@ function loadRaces() {
 
 function App() {
   const [races, setRaces] = useState(loadRaces)
+  const [favorites, setFavorites] = useState(loadFavorites)
+  const [horseProfiles, setHorseProfiles] = useState(loadHorseProfiles)
   const [page, setPage] = useState('home')
   const [query, setQuery] = useState('')
   const [selectedHorse, setSelectedHorse] = useState('')
@@ -113,6 +139,34 @@ function App() {
       STORAGE_KEY,
       JSON.stringify(newRaces)
     )
+  }
+
+  function toggleFavorite(horse) {
+    setFavorites(function (prev) {
+      if (prev.includes(horse)) {
+        return prev.filter(function (name) {
+          return name !== horse
+        })
+      }
+  
+      return [...prev, horse]
+    })
+  }
+
+  function saveHorseProfile(horse, memo) {
+    setHorseProfiles(function (prev) {
+      const next = {
+        ...prev,
+        [horse]: memo
+      }
+  
+      localStorage.setItem(
+        'keiba_database_horse_profiles',
+        JSON.stringify(next)
+      )
+  
+      return next
+    })
   }
 
   function exportJson() {
@@ -255,9 +309,14 @@ function App() {
           <Home
             horses={horses}
             races={races}
+            favorites={favorites}
             onHorse={function () {
               setQuery('')
               setPage('horseSearch')
+            }}
+            onFavoriteHorse={function (horse) {
+              setSelectedHorse(horse)
+              setPage('horse')
             }}
             onRace={function () {
               setQuery('')
@@ -386,6 +445,10 @@ function App() {
           <HorsePage
             horse={selectedHorse}
             races={horseRaces}
+            favorite={favorites.includes(selectedHorse)}
+            onFavorite={toggleFavorite}
+            horseProfile={horseProfiles[selectedHorse] || ''}
+            onSaveProfile={saveHorseProfile}
             onBack={function () {
               setPage('horseSearch')
             }}
@@ -406,13 +469,14 @@ function App() {
         {page === 'admin' && (
           <AdminPage
             races={races}
+            favorites={favorites}
             onBack={goHome}
             onSave={saveRaces}
             onExport={exportJson}
             onImport={importJson}
             onReset={resetLocalData}
           />
-        )}
+        )} 
 
       </main>
 
@@ -505,6 +569,61 @@ function Home(props) {
         </button>
 
       </div>
+
+{props.favorites.length > 0 && (
+  <div className="favoriteSection">
+
+    <div className="sectionHead">
+
+      <div>
+        <p className="eyebrow">
+          FAVORITES
+        </p>
+
+        <h2>
+          ⭐ お気に入り馬
+        </h2>
+      </div>
+
+      <span>
+        {props.favorites.length}頭
+      </span>
+
+    </div>
+
+    <div className="favoriteList">
+
+      {props.favorites.map(function (horse) {
+
+        return (
+          <button
+            className="favoriteHorse"
+            key={horse}
+            onClick={function () {
+              props.onFavoriteHorse(horse)
+            }}
+          >
+
+            <span>
+              ★
+            </span>
+
+            <strong>
+              {horse}
+            </strong>
+
+            <span className="arrow">
+              ›
+            </span>
+
+          </button>
+        )
+      })}
+
+    </div>
+
+  </div>
+)}      
 
       <div className="stats homeStats">
 
@@ -599,6 +718,9 @@ function SearchPage(props) {
 ========================= */
 
 function HorsePage(props) {
+
+  const [profileMemo, setProfileMemo] = useState(props.horseProfile)
+
   const sortedRaces = [...props.races].sort(
     function (a, b) {
       return String(b.race_date).localeCompare(
@@ -626,6 +748,51 @@ function HorsePage(props) {
         <h2>
           🐎 {props.horse}
         </h2>
+
+        <button
+          className={props.favorite ? 'favoriteButton active' : 'favoriteButton'}
+            onClick={function () {
+            props.onFavorite(props.horse)
+            }}
+        >  
+          {props.favorite ? '★ お気に入り' : '☆ お気に入り登録'}
+        </button>
+
+        <div className="horseProfile">
+
+  <div className="horseProfileHeader">
+
+    <div>
+      <p className="eyebrow">
+        HORSE PROFILE
+      </p>
+
+      <h3>
+        📝 馬の特徴・メモ
+      </h3>
+    </div>
+
+  </div>
+
+  <textarea
+    value={profileMemo}
+    onChange={function (event) {
+      setProfileMemo(event.target.value)
+    }}
+    placeholder="この馬の特徴や評価をメモ..."
+    rows="5"
+  />
+
+  <button
+    className="profileSaveButton"
+    onClick={function () {
+      props.onSaveProfile(props.horse, profileMemo)
+    }}
+  >
+    メモを保存
+  </button>
+
+</div>
 
         <span>
           {props.races.length} records
@@ -945,6 +1112,27 @@ function RacePage(props) {
 ========================= */
 
 function AdminPage(props) {
+
+  function exportFavoritesJson() {
+    const blob = new Blob(
+      [JSON.stringify(props.favorites, null, 2)],
+      {
+        type: 'application/json'
+      }
+    )
+
+    const url = URL.createObjectURL(blob)
+
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'favorites.json'
+
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+
+    URL.revokeObjectURL(url)
+  }
 
   const emptyHorse = {
     frame: '',
@@ -1465,6 +1653,13 @@ function AdminPage(props) {
           onClick={props.onReset}
         >
           🔄 初期データに戻す
+        </button>
+
+        <button
+          type="button"
+          onClick={exportFavoritesJson}
+        >
+          ⭐ お気に入りを書き出す
         </button>
 
       </div>
