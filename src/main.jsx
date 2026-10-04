@@ -131,71 +131,32 @@ function App() {
     })
   }
 
-  function exportJson() {
-    const json = JSON.stringify(races, null, 2)
+  function downloadJsonFile(data, filename) {
+  const json = JSON.stringify(data, null, 2)
 
-    const blob = new Blob(
-      [json],
-      { type: 'application/json' }
-    )
+  const blob = new Blob(
+    [json],
+    { type: 'application/json' }
+  )
 
-    const url = URL.createObjectURL(blob)
+  const url = URL.createObjectURL(blob)
 
-    const link = document.createElement('a')
+  const link = document.createElement('a')
+  link.href = url
+  link.download = filename
 
-    link.href = url
-    link.download = 'races.json'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
 
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
+  URL.revokeObjectURL(url)
+}
 
-    URL.revokeObjectURL(url)
-  }
-
-  function exportFavoritesJson() {
-    const json = JSON.stringify(favorites, null, 2)
-
-    const blob = new Blob(
-      [json],
-      { type: 'application/json' }
-    )
-
-    const url = URL.createObjectURL(blob)
-
-    const link = document.createElement('a')
-
-    link.href = url
-    link.download = 'favorites.json'
-
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-
-    URL.revokeObjectURL(url)
-  }
-
-  function exportHorseProfilesJson() {
-    const json = JSON.stringify(horseProfiles, null, 2)
-
-    const blob = new Blob(
-      [json],
-      { type: 'application/json' }
-    )
-
-    const url = URL.createObjectURL(blob)
-
-    const link = document.createElement('a')
-
-    link.href = url
-    link.download = 'horseProfiles.json'
-
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-
-    URL.revokeObjectURL(url)
-  }
+function exportAllJson() {
+  downloadJsonFile(races, 'races.json')
+  downloadJsonFile(favorites, 'favorites.json')
+  downloadJsonFile(horseProfiles, 'horseProfiles.json')
+}
 
   function importJson(event) {
     const file = event.target.files[0]
@@ -485,9 +446,7 @@ function App() {
             horseProfiles={horseProfiles}
             onBack={goHome}
             onSave={saveRaces}
-            onExport={exportJson}
-            onExportFavorites={exportFavoritesJson}
-            onExportHorseProfiles={exportHorseProfilesJson}
+            onExport={exportAllJson}
             onImport={importJson}
             onReset={resetLocalData}
           />
@@ -1806,11 +1765,11 @@ function AdminPage(props) {
         </button>
 
         <button
-          type="button"
-          className="secondaryBtn"
-          onClick={props.onExport}
-        >
-          📥 races.jsonを書き出す
+           type="button"
+            className="secondaryBtn"
+            onClick={props.onExport}
+          >
+            📦 JSONデータを一括書き出し
         </button>
 
         <label className="secondaryBtn importButton">
@@ -1830,22 +1789,6 @@ function AdminPage(props) {
           onClick={props.onReset}
         >
           🔄 初期データに戻す
-        </button>
-
-        <button
-          type="button"
-          className="secondaryBtn"
-          onClick={props.onExportFavorites}
-        >
-          ⭐ お気に入りを書き出す
-        </button>
-
-        <button
-          type="button"
-          className="secondaryBtn"
-          onClick={props.onExportHorseProfiles}
-        >
-          📝 馬プロフィールを書き出す
         </button>
 
       </div>
