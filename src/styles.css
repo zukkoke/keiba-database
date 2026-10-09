@@ -1033,3 +1033,365 @@ body {
   }
 }
 
+
+
+/* =========================
+   Page Navigation
+========================= */
+
+.pageNav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 22px;
+  padding: 5px;
+  background: #ffffff;
+  border: 1px solid #d8dee7;
+  border-radius: 13px;
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.04);
+  overflow-x: auto;
+}
+
+.pageNavButton {
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: #4b5563;
+  border-radius: 9px;
+  padding: 9px 13px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.pageNavButton:hover {
+  background: #f1f5f9;
+  color: #111827;
+}
+
+.pageNavButton.active {
+  background: #111827;
+  color: #fff;
+}
+
+.backButton {
+  color: #374151;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.backButton:hover {
+  color: #111827;
+}
+
+/* =========================
+   Race Search Date Filter
+========================= */
+
+.raceDateSearch {
+  margin-top: 10px;
+}
+
+.raceDateSearch label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 9px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 11px;
+  background: #fff;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.raceDateSearch input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #111827;
+  font: inherit;
+  font-weight: 600;
+}
+
+/* =========================
+   Runner Memo: full display
+========================= */
+
+.runnerCard {
+  grid-template-columns: 50px minmax(0, 1fr);
+  align-items: start;
+}
+
+.runnerName {
+  min-width: 0;
+  width: 100%;
+}
+
+.runnerName > div {
+  min-width: 0;
+}
+
+.runnerName strong {
+  overflow-wrap: anywhere;
+}
+
+.runnerName span {
+  flex-shrink: 0;
+}
+
+.runnerCard p {
+  min-width: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-height: none;
+  overflow: visible;
+}
+
+/* =========================
+   Mobile
+========================= */
+
+@media (max-width: 700px) {
+  .pageNav {
+    margin-bottom: 18px;
+    border-radius: 11px;
+  }
+
+  .pageNavButton {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .raceDateSearch label {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .raceDateSearch input {
+    min-width: 0;
+  }
+
+  .runnerCard {
+    grid-template-columns: 42px minmax(0, 1fr);
+    column-gap: 10px;
+    padding: 13px;
+  }
+
+  .runnerName {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .runnerName span {
+    font-size: 11px;
+  }
+
+  .runnerCard p {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+}
+
+
+/* =========================
+   Recommend Races
+========================= */
+
+.recommendChoice {
+  grid-column: 1 / -1;
+}
+
+.recommendLead {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.recommendList {
+  display: grid;
+  gap: 16px;
+}
+
+.recommendCard {
+  background: #fff;
+  border: 1px solid #d8dee7;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+}
+
+.recommendHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.recommendNo {
+  display: inline-block;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: #111827;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.recommendTitle {
+  margin: 0 0 18px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: #1f2937;
+}
+
+.recommendTitle span {
+  color: #6b7280;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.recommendTitle strong {
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.recommendMemo {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+}
+
+.recommendMemo .eyebrow {
+  margin-bottom: 6px;
+}
+
+.recommendMemo p:last-child {
+  margin: 0;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.picksGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.pickRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.pickRow strong {
+  font-size: 16px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.pickMark {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  font-size: 20px;
+  font-weight: 800;
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.markHonmei {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.markTaikou {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.markTanana {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.markRenka {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.recommendEditTitle {
+  display: grid;
+  grid-template-columns: 1.4fr 0.5fr 2fr;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.recommendEditTitle input,
+.recommendMemo textarea,
+.pickRow input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #c7d0dc;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 15px;
+  color: #111827;
+  outline: none;
+  font-family: inherit;
+}
+
+.recommendMemo textarea {
+  resize: vertical;
+}
+
+.recommendEditTitle input:focus,
+.recommendMemo textarea:focus,
+.pickRow input:focus {
+  border-color: #64748b;
+  box-shadow: 0 0 0 2px rgba(100, 116, 139, 0.12);
+}
+
+@media (max-width: 700px) {
+  .recommendCard {
+    padding: 16px;
+    border-radius: 15px;
+  }
+
+  .picksGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .recommendEditTitle {
+    grid-template-columns: 1fr 80px;
+  }
+
+  .recommendEditTitle input:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .recommendChoice {
+    grid-column: auto;
+  }
+
+  .sectionHead .secondaryBtn {
+    flex-shrink: 0;
+  }
+}

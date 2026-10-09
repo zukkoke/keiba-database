@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import initialRaces from './data/races.json'
 import initialHorseProfiles from './data/horseProfiles.json'
 import initialFavorites from './data/favorites.json'
+import initialRecommendations from './data/recommendations.json'
 import './styles.css'
 
 function loadHorseProfiles() {
@@ -21,10 +22,13 @@ function App() {
   const [races, setRaces] = useState(loadRaces)
   const [favorites, setFavorites] = useState(loadFavorites)
   const [horseProfiles, setHorseProfiles] = useState(loadHorseProfiles)
+  const [recommendations, setRecommendations] = useState(initialRecommendations)
   const [page, setPage] = useState('home')
   const [query, setQuery] = useState('')
+  const [raceDateQuery, setRaceDateQuery] = useState('')
   const [selectedHorse, setSelectedHorse] = useState('')
   const [selectedRace, setSelectedRace] = useState(null)
+  const [pageHistory, setPageHistory] = useState([])
 
   const horses = useMemo(() => {
     const names = []
@@ -57,22 +61,28 @@ function App() {
 
   const filteredRaces = useMemo(() => {
     const q = query.trim().toLowerCase()
-
-    if (!q) {
-      return races
-    }
+    const dateQuery = raceDateQuery.trim()
 
     return races.filter(function (race) {
       const name = String(race.race_name || '')
       const course = String(race.racecourse || '')
       const number = String(race.race_number || '')
+      const date = String(race.race_date || '')
 
       const searchText =
         name + ' ' + course + ' ' + number
 
-      return searchText.toLowerCase().includes(q)
+      const matchesText =
+        !q ||
+        searchText.toLowerCase().includes(q)
+
+      const matchesDate =
+        !dateQuery ||
+        date === dateQuery
+
+      return matchesText && matchesDate
     })
-  }, [query, races])
+  }, [query, raceDateQuery, races])
 
   const horseRaces = useMemo(() => {
     if (!selectedHorse) {
@@ -86,24 +96,102 @@ function App() {
     })
   }, [races, selectedHorse])
 
+  function getCurrentView() {
+    return {
+      page: page,
+      query: query,
+      raceDateQuery: raceDateQuery,
+      selectedHorse: selectedHorse,
+      selectedRace: selectedRace
+    }
+  }
+
+  function navigateTo(nextPage, options) {
+    const next = options || {}
+
+    setPageHistory(function (prev) {
+      return [...prev, getCurrentView()]
+    })
+
+    setPage(nextPage)
+
+    if (Object.prototype.hasOwnProperty.call(next, 'query')) {
+      setQuery(next.query)
+    } else {
+      setQuery('')
+    }
+
+    if (Object.prototype.hasOwnProperty.call(next, 'raceDateQuery')) {
+      setRaceDateQuery(next.raceDateQuery)
+    } else {
+      setRaceDateQuery('')
+    }
+
+    if (Object.prototype.hasOwnProperty.call(next, 'selectedHorse')) {
+      setSelectedHorse(next.selectedHorse)
+    }
+
+    if (Object.prototype.hasOwnProperty.call(next, 'selectedRace')) {
+      setSelectedRace(next.selectedRace)
+    }
+  }
+
+  function goBack() {
+    setPageHistory(function (prev) {
+      if (prev.length === 0) {
+        setPage('home')
+        setQuery('')
+        setRaceDateQuery('')
+        setSelectedHorse('')
+        setSelectedRace(null)
+        return prev
+      }
+
+      const previous = prev[prev.length - 1]
+
+      setPage(previous.page)
+      setQuery(previous.query || '')
+      setRaceDateQuery(previous.raceDateQuery || '')
+      setSelectedHorse(previous.selectedHorse || '')
+      setSelectedRace(previous.selectedRace || null)
+
+      return prev.slice(0, -1)
+    })
+  }
+
   function goHome() {
+    setPageHistory([])
     setPage('home')
     setQuery('')
+    setRaceDateQuery('')
+    setSelectedHorse('')
+    setSelectedRace(null)
+  }
+
+  function goToTab(nextPage) {
+    setPageHistory([])
+    setPage(nextPage)
+    setQuery('')
+    setRaceDateQuery('')
     setSelectedHorse('')
     setSelectedRace(null)
   }
 
   function openHorse(horse) {
-    setSelectedHorse(horse)
-    setSelectedRace(null)
-    setQuery('')
-    setPage('horse')
+    navigateTo('horse', {
+      selectedHorse: horse,
+      selectedRace: null,
+      query: '',
+      raceDateQuery: ''
+    })
   }
 
   function openRace(race) {
-    setSelectedRace(race)
-    setQuery('')
-    setPage('race')
+    navigateTo('race', {
+      selectedRace: race,
+      query: '',
+      raceDateQuery: ''
+    })
   }
 
   function saveRaces(newRaces) {
@@ -156,6 +244,7 @@ function exportAllJson() {
   downloadJsonFile(races, 'races.json')
   downloadJsonFile(favorites, 'favorites.json')
   downloadJsonFile(horseProfiles, 'horseProfiles.json')
+  downloadJsonFile(recommendations, 'recommendations.json')
 }
 
   function importJson(event) {
@@ -283,18 +372,30 @@ function exportAllJson() {
             horses={horses}
             races={races}
             favorites={favorites}
+            onNavigate={goToTab}
             onHorse={function () {
-              setQuery('')
-              setPage('horseSearch')
+              goToTab('horseSearch')
             }}
             onFavoriteHorse={function (horse) {
               setSelectedHorse(horse)
               setPage('horse')
             }}
             onRace={function () {
-              setQuery('')
-              setPage('raceSearch')
+              goToTab('raceSearch')
             }}
+            onRecommend={function () {
+              goToTab('recommend')
+            }}
+          />
+        )}
+
+        {page === 'recommend' && (
+          <RecommendPage
+            recommendations={recommendations}
+            onChange={setRecommendations}
+            onBack={goBack}
+            navPage={page}
+            onNavigate={goToTab}
           />
         )}
 
@@ -304,7 +405,9 @@ function exportAllJson() {
             placeholder="馬名を入力してください"
             query={query}
             setQuery={setQuery}
-            onBack={goHome}
+            onBack={goBack}
+            navPage={page}
+            onNavigate={goToTab}
           >
 
             <div className="searchResults">
@@ -364,7 +467,12 @@ function exportAllJson() {
             placeholder="レース名を入力してください"
             query={query}
             setQuery={setQuery}
-            onBack={goHome}
+            onBack={goBack}
+            navPage={page}
+            onNavigate={goToTab}
+            raceDateQuery={raceDateQuery}
+            setRaceDateQuery={setRaceDateQuery}
+            isRaceSearch={true}
           >
 
             <div className="searchResults">
@@ -422,9 +530,9 @@ function exportAllJson() {
             onFavorite={toggleFavorite}
             horseProfile={horseProfiles[selectedHorse] || ''}
             onSaveProfile={saveHorseProfile}
-            onBack={function () {
-              setPage('horseSearch')
-            }}
+            onBack={goBack}
+            navPage={page}
+            onNavigate={goToTab}
             onRace={openRace}
           />
         )}
@@ -432,9 +540,9 @@ function exportAllJson() {
         {page === 'race' && selectedRace && (
           <RacePage
             race={selectedRace}
-            onBack={function () {
-              setPage('raceSearch')
-            }}
+            onBack={goBack}
+            navPage={page}
+            onNavigate={goToTab}
             onHorse={openHorse}
           />
         )}
@@ -444,7 +552,9 @@ function exportAllJson() {
             races={races}
             favorites={favorites}
             horseProfiles={horseProfiles}
-            onBack={goHome}
+            onBack={goBack}
+            navPage={page}
+            onNavigate={goToTab}
             onSave={saveRaces}
             onExport={exportAllJson}
             onImport={importJson}
@@ -470,6 +580,11 @@ function exportAllJson() {
 function Home(props) {
   return (
     <section className="home">
+
+      <PageNav
+        page="home"
+        onNavigate={props.onNavigate}
+      />
 
       <div className="hero homeHero">
 
@@ -533,6 +648,31 @@ function Home(props) {
 
             <small>
               レースの状況・出走馬を見る
+            </small>
+          </div>
+
+          <span className="arrow">
+            ›
+          </span>
+
+        </button>
+
+        <button
+          className="mainChoice recommendChoice"
+          onClick={props.onRecommend}
+        >
+
+          <span className="choiceIcon">
+            ⭐
+          </span>
+
+          <div>
+            <strong>
+              おすすめレース
+            </strong>
+
+            <small>
+              注目レースと自分の予想を一覧で管理
             </small>
           </div>
 
@@ -632,15 +772,95 @@ function Home(props) {
    Search
 ========================= */
 
+function PageNav(props) {
+  return (
+    <nav className="pageNav" aria-label="ページ移動">
+      <button
+        className={props.page === 'home' ? 'pageNavButton active' : 'pageNavButton'}
+        onClick={function () {
+          props.onNavigate('home')
+        }}
+      >
+        🏠 ホーム
+      </button>
+
+      <button
+        className={
+          props.page === 'horseSearch' || props.page === 'horse'
+            ? 'pageNavButton active'
+            : 'pageNavButton'
+        }
+        onClick={function () {
+          props.onNavigate('horseSearch')
+        }}
+      >
+        🐎 馬を検索
+      </button>
+
+      <button
+        className={
+          props.page === 'raceSearch' || props.page === 'race'
+            ? 'pageNavButton active'
+            : 'pageNavButton'
+        }
+        onClick={function () {
+          props.onNavigate('raceSearch')
+        }}
+      >
+        🏇 レースを検索
+      </button>
+
+      <button
+        className={
+          props.page === 'recommend'
+            ? 'pageNavButton active'
+            : 'pageNavButton'
+        }
+        onClick={function () {
+          props.onNavigate('recommend')
+        }}
+      >
+        ⭐ おすすめレース
+      </button>
+
+      <button
+        className={
+          props.page === 'admin'
+            ? 'pageNavButton active'
+            : 'pageNavButton'
+        }
+        onClick={function () {
+          const password = window.prompt(
+            '管理者パスワードを入力してください'
+          )
+
+          if (password === 'keiba-admin') {
+            props.onNavigate('admin')
+          } else if (password !== null) {
+            window.alert('パスワードが違います。')
+          }
+        }}
+      >
+        ⚙ 管理
+      </button>
+    </nav>
+  )
+}
+
 function SearchPage(props) {
   return (
     <section className="content searchPage">
+
+      <PageNav
+        page={props.navPage}
+        onNavigate={props.onNavigate}
+      />
 
       <button
         className="backButton"
         onClick={props.onBack}
       >
-        ← トップへ戻る
+        ← 1つ前のページへ戻る
       </button>
 
       <div className="sectionHead">
@@ -678,6 +898,21 @@ function SearchPage(props) {
 
         </div>
 
+        {props.isRaceSearch && (
+          <div className="raceDateSearch">
+            <label>
+              開催日で絞り込み
+              <input
+                type="date"
+                value={props.raceDateQuery}
+                onChange={function (e) {
+                  props.setRaceDateQuery(e.target.value)
+                }}
+              />
+            </label>
+          </div>
+        )}
+
       </div>
 
       {props.children}
@@ -708,11 +943,16 @@ function HorsePage(props) {
   return (
     <section className="content">
 
+      <PageNav
+        page={props.navPage}
+        onNavigate={props.onNavigate}
+      />
+
       <button
         className="backButton"
         onClick={props.onBack}
       >
-        ← 馬検索へ戻る
+        ← 1つ前のページへ戻る
       </button>
 
       <div className="detailHeader">
@@ -915,11 +1155,16 @@ function RacePage(props) {
   return (
     <section className="content">
 
+      <PageNav
+        page={props.navPage}
+        onNavigate={props.onNavigate}
+      />
+
       <button
         className="backButton"
         onClick={props.onBack}
       >
-        ← レース検索へ戻る
+        ← 1つ前のページへ戻る
       </button>
 
       <div className="raceDetail">
@@ -1384,11 +1629,16 @@ function AdminPage(props) {
   return (
     <section className="content adminPage">
 
+      <PageNav
+        page={props.navPage}
+        onNavigate={props.onNavigate}
+      />
+
       <button
         className="backButton"
         onClick={props.onBack}
       >
-        ← トップへ戻る
+        ← 1つ前のページへ戻る
       </button>
 
       <div className="detailHeader">
@@ -2069,6 +2319,284 @@ function AdminPage(props) {
           共有データとして保存する場合は、JSONを書き出してGitHubのファイルを更新してください。
         </p>
 
+      </div>
+
+    </section>
+  )
+}
+
+
+/* =========================
+   Recommend
+========================= */
+
+const PICK_MARKS = ['◎', '○', '▲', '△']
+
+const MARK_CLASS = {
+  '◎': 'markHonmei',
+  '○': 'markTaikou',
+  '▲': 'markTanana',
+  '△': 'markRenka'
+}
+
+function RecommendPage(props) {
+  const [editing, setEditing] = useState(false)
+  const items = props.recommendations
+
+  function updateRace(id, field, value) {
+    props.onChange(
+      items.map(function (race) {
+        if (race.id !== id) {
+          return race
+        }
+
+        return { ...race, [field]: value }
+      })
+    )
+  }
+
+  function updatePick(id, index, value) {
+    props.onChange(
+      items.map(function (race) {
+        if (race.id !== id) {
+          return race
+        }
+
+        return {
+          ...race,
+          picks: race.picks.map(function (pick, i) {
+            return i === index
+              ? { ...pick, horse: value }
+              : pick
+          })
+        }
+      })
+    )
+  }
+
+  function addRace() {
+    props.onChange([
+      ...items,
+      {
+        id: 'rec-' + Date.now(),
+        date: '',
+        race_number: '',
+        race_name: '',
+        memo: '',
+        picks: PICK_MARKS.map(function (mark) {
+          return { mark: mark, horse: '' }
+        })
+      }
+    ])
+  }
+
+  function deleteRace(id) {
+    if (!window.confirm('このレースを削除しますか？')) {
+      return
+    }
+
+    props.onChange(
+      items.filter(function (race) {
+        return race.id !== id
+      })
+    )
+  }
+
+  return (
+    <section className="content recommendPage">
+
+      <PageNav
+        page={props.navPage}
+        onNavigate={props.onNavigate}
+      />
+
+      <button
+        className="backButton"
+        onClick={props.onBack}
+      >
+        ← 1つ前のページへ戻る
+      </button>
+
+      <div className="sectionHead">
+
+        <div>
+          <p className="eyebrow">
+            RECOMMEND
+          </p>
+
+          <h2>
+            ⭐ おすすめレース
+          </h2>
+
+          <p className="recommendLead">
+            注目レースと自分の予想を一覧で管理
+          </p>
+        </div>
+
+        <button
+          type="button"
+          className="secondaryBtn"
+          onClick={function () {
+            setEditing(!editing)
+          }}
+        >
+          {editing ? '✓ 編集を終える' : '✏️ 編集'}
+        </button>
+
+      </div>
+
+      {items.length === 0 && (
+        <div className="empty">
+          おすすめレースはまだありません。
+        </div>
+      )}
+
+      <div className="recommendList">
+
+        {items.map(function (race, index) {
+          return (
+            <article
+              className="recommendCard"
+              key={race.id}
+            >
+
+              <div className="recommendHead">
+
+                <span className="recommendNo">
+                  {index + 1}レース目
+                </span>
+
+                {editing && (
+                  <button
+                    type="button"
+                    className="deleteBtn"
+                    onClick={function () {
+                      deleteRace(race.id)
+                    }}
+                  >
+                    🗑️ 削除
+                  </button>
+                )}
+
+              </div>
+
+              {editing ? (
+                <div className="recommendEditTitle">
+
+                  <input
+                    value={race.date}
+                    onChange={function (e) {
+                      updateRace(race.id, 'date', e.target.value)
+                    }}
+                    placeholder="2026/11/〇（土）"
+                  />
+
+                  <input
+                    value={race.race_number}
+                    onChange={function (e) {
+                      updateRace(race.id, 'race_number', e.target.value)
+                    }}
+                    placeholder="R"
+                  />
+
+                  <input
+                    value={race.race_name}
+                    onChange={function (e) {
+                      updateRace(race.id, 'race_name', e.target.value)
+                    }}
+                    placeholder="レース名"
+                  />
+
+                </div>
+              ) : (
+                <h3 className="recommendTitle">
+                  <span>{race.date}</span>
+                  {' '}
+                  <span>{race.race_number}R</span>
+                  {' '}
+                  <strong>{race.race_name}</strong>
+                </h3>
+              )}
+
+              <div className="recommendMemo">
+
+                <p className="eyebrow">
+                  簡単なメモ
+                </p>
+
+                {editing ? (
+                  <textarea
+                    rows="3"
+                    value={race.memo}
+                    onChange={function (e) {
+                      updateRace(race.id, 'memo', e.target.value)
+                    }}
+                    placeholder="レースの狙いや展開予想"
+                  />
+                ) : (
+                  <p>{race.memo}</p>
+                )}
+
+              </div>
+
+              <div className="picksGrid">
+
+                {race.picks.map(function (pick, i) {
+                  return (
+                    <div
+                      className="pickRow"
+                      key={pick.mark}
+                    >
+
+                      <span
+                        className={'pickMark ' + (MARK_CLASS[pick.mark] || '')}
+                      >
+                        {pick.mark}
+                      </span>
+
+                      {editing ? (
+                        <input
+                          value={pick.horse}
+                          onChange={function (e) {
+                            updatePick(race.id, i, e.target.value)
+                          }}
+                          placeholder="馬名"
+                        />
+                      ) : (
+                        <strong>{pick.horse || '-'}</strong>
+                      )}
+
+                    </div>
+                  )
+                })}
+
+              </div>
+
+            </article>
+          )
+        })}
+
+      </div>
+
+      {editing && (
+        <div className="adminActions">
+
+          <button
+            type="button"
+            className="primary adminSaveBtn"
+            onClick={addRace}
+          >
+            ＋ レースを追加
+          </button>
+
+        </div>
+      )}
+
+      <div className="adminNotice">
+        <p>
+          編集内容はこのブラウザを開いている間だけ反映されます。
+          共有する場合は、管理画面からJSONを書き出してrecommendations.jsonを更新してください。
+        </p>
       </div>
 
     </section>
