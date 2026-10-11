@@ -2130,5 +2130,731 @@
         "memo": "掛かり癖あり。かかり最後は才力持たずに失速もわるくない競馬だったと思う"
       }
     ]
+  },
+  {
+    "id": 1791605055270,
+    "race_date": "2026-10-10",
+    "race_name": "2歳未勝利戦",
+    "racecourse": "東京",
+    "race_number": 2,
+    "course": "芝",
+    "distance": 1600,
+    "weather": "晴",
+    "ground": "良",
+    "pace": "ミドルペース",
+    "bias": "差し展開",
+    "race_memo": "勝ち時計　1:34.2\n前が垂れて差しが決まる展開\nレースレベル低い",
+    "horses": [
+      {
+        "frame": 1,
+        "number": 1,
+        "horse_name": "セレネリオン",
+        "jockey": "佐々木",
+        "weight": 55,
+        "finish": 10,
+        "memo": "買う要素なし"
+      },
+      {
+        "frame": 2,
+        "number": 2,
+        "horse_name": "マーズワース",
+        "jockey": "石橋脩",
+        "weight": 55,
+        "finish": 9,
+        "memo": "買う理由なし。\n後方待機の１発でワンチャンくらい"
+      },
+      {
+        "frame": 3,
+        "number": 3,
+        "horse_name": "エバーラスティング",
+        "jockey": "柴田大",
+        "weight": 55,
+        "finish": 12,
+        "memo": "買う理由なし"
+      },
+      {
+        "frame": 4,
+        "number": 4,
+        "horse_name": "ラッパースヴィル",
+        "jockey": "津村",
+        "weight": 55,
+        "finish": 11,
+        "memo": "展開が向いての２着でそこまで評価できない\n"
+      },
+      {
+        "frame": 4,
+        "number": 5,
+        "horse_name": "マイサマーガール",
+        "jockey": "原",
+        "weight": "",
+        "finish": "",
+        "memo": "買う理由なし"
+      },
+      {
+        "frame": 5,
+        "number": 6,
+        "horse_name": "フェリスセンダ",
+        "jockey": "三浦",
+        "weight": 55,
+        "finish": 13,
+        "memo": "折り合いを欠き、馬郡はダメ\n外目の枠なら見直し"
+      },
+      {
+        "frame": 5,
+        "number": 7,
+        "horse_name": "ローズファミリー",
+        "jockey": "大久保",
+        "weight": 52,
+        "finish": 5,
+        "memo": "逃げて差されての５着。斤量があるとはいえ展開向かずの中頑張った。\n次走も同じ斤量なら狙える"
+      },
+      {
+        "frame": 6,
+        "number": 8,
+        "horse_name": "ソプラノクイーン",
+        "jockey": "田辺",
+        "weight": 55,
+        "finish": 3,
+        "memo": "展開が向いての３着\nじりじり伸びているがスパッと切れない"
+      },
+      {
+        "frame": 6,
+        "number": 9,
+        "horse_name": "ルーチェルナーレ",
+        "jockey": "丹内",
+        "weight": 55,
+        "finish": 6,
+        "memo": "買う理由なし"
+      },
+      {
+        "frame": 7,
+        "number": 10,
+        "horse_name": "ヴァルフォース",
+        "jockey": "横山武",
+        "weight": 55,
+        "finish": 4,
+        "memo": "早めに仕掛けて最後は差された。\n前につけられるのは良いので次走見直し"
+      },
+      {
+        "frame": 7,
+        "number": 11,
+        "horse_name": "ホワイトホール",
+        "jockey": "嶋田",
+        "weight": 55,
+        "finish": 7,
+        "memo": "使える脚が短いので東京は✖"
+      },
+      {
+        "frame": 8,
+        "number": 12,
+        "horse_name": "ゴールデンハニビー",
+        "jockey": "ルメール",
+        "weight": 55,
+        "finish": 1,
+        "memo": "展開は向いたがこの中じゃ頭一つ抜けてる\n終始、外回して突き抜けで能力高そう"
+      },
+      {
+        "frame": 8,
+        "number": 13,
+        "horse_name": "リアスハート",
+        "jockey": "武藤",
+        "weight": 55,
+        "finish": 8,
+        "memo": "買う理由なし"
+      }
+    ]
+  },
+  {
+    "id": 1791609281304,
+    "race_date": "2026-10-10",
+    "race_name": "2歳新馬",
+    "racecourse": "東京",
+    "race_number": 5,
+    "course": "芝",
+    "distance": 1800,
+    "weather": "晴",
+    "ground": "良",
+    "pace": "スローペース",
+    "bias": "",
+    "race_memo": "勝ち時計\n1000m　1:04.8　ドスロー\nラスト2Fの瞬発力勝負戦",
+    "horses": [
+      {
+        "frame": 1,
+        "number": 1,
+        "horse_name": "サトノカグラ",
+        "jockey": "ルメール",
+        "weight": 56,
+        "finish": 1,
+        "memo": "内をロスなく回っての勝利\n上り32.7もスローすぎて過剰評価禁物"
+      },
+      {
+        "frame": 2,
+        "number": 2,
+        "horse_name": "カーラベッリーナ",
+        "jockey": "津村",
+        "weight": 55,
+        "finish": 3,
+        "memo": "このスローで後方になるのは厳しいが\n7番手から追い込んで3着と脚はある"
+      },
+      {
+        "frame": 3,
+        "number": 3,
+        "horse_name": "ゲームアビリティー",
+        "jockey": "木幡巧",
+        "weight": 56,
+        "finish": 11,
+        "memo": "買う理由なし"
+      },
+      {
+        "frame": 4,
+        "number": 4,
+        "horse_name": "スノーヴァ",
+        "jockey": "三浦",
+        "weight": 56,
+        "finish": 7,
+        "memo": "テンがかなり遅い。追走が厳しい"
+      },
+      {
+        "frame": 5,
+        "number": 5,
+        "horse_name": "ルミエールノット",
+        "jockey": "吉田豊",
+        "weight": 56,
+        "finish": 8,
+        "memo": "買う理由なし"
+      },
+      {
+        "frame": 5,
+        "number": 6,
+        "horse_name": "リカジョンファンク",
+        "jockey": "大野",
+        "weight": 56,
+        "finish": 5,
+        "memo": "前有利展開で切れ負け\nスローすぎたかな？"
+      },
+      {
+        "frame": 6,
+        "number": 7,
+        "horse_name": "ルナトレイル",
+        "jockey": "横山和",
+        "weight": 55,
+        "finish": 4,
+        "memo": "買う理由なし"
+      },
+      {
+        "frame": 6,
+        "number": 8,
+        "horse_name": "アラヤシキ",
+        "jockey": "嶋田",
+        "weight": 56,
+        "finish": 10,
+        "memo": "買う理由なし"
+      },
+      {
+        "frame": 7,
+        "number": 9,
+        "horse_name": "チリチョウズ",
+        "jockey": "柴田大",
+        "weight": 56,
+        "finish": 12,
+        "memo": "買う理由なし"
+      },
+      {
+        "frame": 7,
+        "number": 10,
+        "horse_name": "アスクゴクジョウ",
+        "jockey": "戸崎圭",
+        "weight": 56,
+        "finish": 2,
+        "memo": "前で勝負も切れ負けして2着\nポジション取りは悪くない馬"
+      },
+      {
+        "frame": 8,
+        "number": 11,
+        "horse_name": "リュウゴリーベ",
+        "jockey": "石橋脩",
+        "weight": 56,
+        "finish": 6,
+        "memo": "買う理由なし"
+      },
+      {
+        "frame": 8,
+        "number": 12,
+        "horse_name": "チャリンコリン",
+        "jockey": "小林美",
+        "weight": 53,
+        "finish": 9,
+        "memo": "買う理由なし"
+      }
+    ]
+  },
+  {
+    "id": 1791632747096,
+    "race_date": "2026-10-10",
+    "race_name": "2歳新馬",
+    "racecourse": "東京",
+    "race_number": 6,
+    "course": "芝",
+    "distance": 1600,
+    "weather": "",
+    "ground": "晴",
+    "pace": "良",
+    "bias": "外伸び馬場",
+    "race_memo": "勝ち時計　1:36.2\n1000m　1:02.1　ドスロー\nスローで団子状態なのでフラット～やや外差し",
+    "horses": [
+      {
+        "frame": 1,
+        "number": 1,
+        "horse_name": "クラウンスティーズ",
+        "jockey": "内田博",
+        "weight": 56,
+        "finish": 14,
+        "memo": "買う理由なし"
+      },
+      {
+        "frame": 2,
+        "number": 2,
+        "horse_name": "メノルカ",
+        "jockey": "丹内",
+        "weight": 56,
+        "finish": 6,
+        "memo": "騎手が追ってない気がする。\n次走、馬券妙味でてきそう"
+      },
+      {
+        "frame": 3,
+        "number": 3,
+        "horse_name": "セラフィムコード",
+        "jockey": "小林美",
+        "weight": 54,
+        "finish": 5,
+        "memo": "スローペースを逃げて最後は垂れて負け\n距離長いのか弱いのかというところ。生き脚は良し"
+      },
+      {
+        "frame": 3,
+        "number": 4,
+        "horse_name": "ナムラマシュー",
+        "jockey": "丸田",
+        "weight": 56,
+        "finish": 13,
+        "memo": "買う理由なし"
+      },
+      {
+        "frame": 4,
+        "number": 5,
+        "horse_name": " レイロウレンズ",
+        "jockey": "木幡初",
+        "weight": 56,
+        "finish": 8,
+        "memo": "後方からで伸びてきてはいた。\nただ、このスローで後方からになってしまうのは厳しい\n大穴オッズなら紐に入れても"
+      },
+      {
+        "frame": 4,
+        "number": 6,
+        "horse_name": "ルーチェカーロ",
+        "jockey": "横山武",
+        "weight": 56,
+        "finish": 7,
+        "memo": "買う理由なし"
+      },
+      {
+        "frame": 5,
+        "number": 7,
+        "horse_name": "カゼノロマン",
+        "jockey": "戸崎圭",
+        "weight": 56,
+        "finish": 10,
+        "memo": "スタートおっそい"
+      },
+      {
+        "frame": 5,
+        "number": 8,
+        "horse_name": "フェロックス",
+        "jockey": "三浦",
+        "weight": 56,
+        "finish": "",
+        "memo": "最終コーナーまですごく手ごたえ良かったのに仕掛け早くて刺された\n切れはないがもう少しペースが流れてほしいかな"
+      },
+      {
+        "frame": 6,
+        "number": 9,
+        "horse_name": "ブレイクソロ",
+        "jockey": "斎藤",
+        "weight": 56,
+        "finish": 1,
+        "memo": "2歳で554とかなりでかい。\n直線で進路を変えるロスがあるも差し切り。瞬発力あるね。"
+      },
+      {
+        "frame": 6,
+        "number": 10,
+        "horse_name": "ポートマンロード",
+        "jockey": "大野",
+        "weight": 55,
+        "finish": 3,
+        "memo": "1，2着馬とはポジションの差\n次走も買える"
+      },
+      {
+        "frame": 7,
+        "number": 11,
+        "horse_name": "ジーティーストーム",
+        "jockey": "原",
+        "weight": 56,
+        "finish": 12,
+        "memo": "買う理由なし"
+      },
+      {
+        "frame": 7,
+        "number": 12,
+        "horse_name": "キャンディリヒト",
+        "jockey": "横山和",
+        "weight": 55,
+        "finish": 9,
+        "memo": "調教すごかったのに直線伸びずに負け。\n弱い、、"
+      },
+      {
+        "frame": 8,
+        "number": 13,
+        "horse_name": "ランギヌイ",
+        "jockey": "ルメール",
+        "weight": "",
+        "finish": 2,
+        "memo": "勝ち馬とは差のある内容かな。\n大成はしないだろう。内容は早めに先頭に出ると目標にされ差し切られたので悪くない"
+      },
+      {
+        "frame": 8,
+        "number": 14,
+        "horse_name": "キセキノアスク",
+        "jockey": "田辺",
+        "weight": 55,
+        "finish": 11,
+        "memo": "買う理由なし"
+      }
+    ]
+  },
+  {
+    "id": 1791634076209,
+    "race_date": "2026-10-10",
+    "race_name": "3歳以上1勝クラス",
+    "racecourse": "東京",
+    "race_number": 8,
+    "course": "芝",
+    "distance": 2000,
+    "weather": "晴",
+    "ground": "良",
+    "pace": "スローペース",
+    "bias": "前有利",
+    "race_memo": "勝ち時計　2:00.2\n1000m　1:01:09\n",
+    "horses": [
+      {
+        "frame": 1,
+        "number": 1,
+        "horse_name": "コスモアチーブ",
+        "jockey": "丹内",
+        "weight": 58,
+        "finish": 3,
+        "memo": "完全に脚を余して3着\n道中は内ラチを走り脚はためられたが最後の直線は前壁更に、外に出すロスもあり。\n外に出した後もグンと伸びていた。"
+      },
+      {
+        "frame": 2,
+        "number": 2,
+        "horse_name": "ランブルスコ",
+        "jockey": "津村",
+        "weight": 56,
+        "finish": 5,
+        "memo": "位置を取るために足を使って直線伸びず。\nスローなのに位置取りできない点でこの馬は弱い"
+      },
+      {
+        "frame": 3,
+        "number": 3,
+        "horse_name": "イスキオス",
+        "jockey": "佐々木",
+        "weight": 58,
+        "finish": 8,
+        "memo": "買い要素なし"
+      },
+      {
+        "frame": 4,
+        "number": 4,
+        "horse_name": "アローメタル",
+        "jockey": "ルメール",
+        "weight": 56,
+        "finish": 1,
+        "memo": "スローペースを2番手追走から直線で差し切り1着\n展開向いたがルメールの騎乗で勝てた。\n切れがすごいあるタイプではないので昇給してからは厳しいかな"
+      },
+      {
+        "frame": 5,
+        "number": 5,
+        "horse_name": "カーロアヴァンティ",
+        "jockey": "内田博",
+        "weight": 58,
+        "finish": 7,
+        "memo": "買い要素なし"
+      },
+      {
+        "frame": 6,
+        "number": 6,
+        "horse_name": "ウップヘリーア",
+        "jockey": "戸崎圭",
+        "weight": 56,
+        "finish": 2,
+        "memo": "スローペースを逃げて2着　ここは勝ちたかったな\n最後は少し垂れてしまった。\n軸にはいい馬"
+      },
+      {
+        "frame": 6,
+        "number": 7,
+        "horse_name": "サンクレゾン",
+        "jockey": "三浦",
+        "weight": 54,
+        "finish": 6,
+        "memo": "買い要素なし"
+      },
+      {
+        "frame": 7,
+        "number": 8,
+        "horse_name": "コスモアルペジオ",
+        "jockey": "石橋脩",
+        "weight": 56,
+        "finish": 10,
+        "memo": "買い要素なし"
+      },
+      {
+        "frame": 7,
+        "number": 9,
+        "horse_name": "トルネードアイル",
+        "jockey": "荻野極",
+        "weight": 56,
+        "finish": 9,
+        "memo": "芝はダメそう"
+      },
+      {
+        "frame": 8,
+        "number": 10,
+        "horse_name": "ストレートブラック",
+        "jockey": "松岡",
+        "weight": 56,
+        "finish": 4,
+        "memo": "前有利を指してきて唯一の掲示板\n次走も人気しないようなら買える"
+      },
+      {
+        "frame": 8,
+        "number": 11,
+        "horse_name": "オウケンヴィーナス",
+        "jockey": "木幡育",
+        "weight": 56,
+        "finish": 11,
+        "memo": "スタート出遅れ　買い要素なし"
+      }
+    ]
+  },
+  {
+    "id": 1791635038083,
+    "race_date": "2026-10-10",
+    "race_name": "陣馬特別",
+    "racecourse": "東京",
+    "race_number": 9,
+    "course": "芝",
+    "distance": 2400,
+    "weather": "晴",
+    "ground": "良",
+    "pace": "ミドルペース",
+    "bias": "差し有利展開",
+    "race_memo": "勝ち時計 2:24.4\n1000m 1:1.8\n道中、まくりが入り前が厳しく、後ろに有利になった",
+    "horses": [
+      {
+        "frame": 1,
+        "number": 1,
+        "horse_name": "リュクスパトロール",
+        "jockey": "ミシェル",
+        "weight": 50,
+        "finish": "",
+        "memo": "買い要素なし"
+      },
+      {
+        "frame": 2,
+        "number": 2,
+        "horse_name": "ノクターン",
+        "jockey": "ルメール",
+        "weight": 54,
+        "finish": 5,
+        "memo": "馬分に囲まれ終始走りにくそう。\n更に最後は失速。距離が長いのかも"
+      },
+      {
+        "frame": 3,
+        "number": 3,
+        "horse_name": "ノラリクラリ",
+        "jockey": "佐々木",
+        "weight": 57,
+        "finish": 1,
+        "memo": "まくりが入り差し展開は向いた。\nそこまで評価はできない"
+      },
+      {
+        "frame": 4,
+        "number": 4,
+        "horse_name": "ビップチェイス",
+        "jockey": "江田照",
+        "weight": 54,
+        "finish": 9,
+        "memo": "第4コーナーで捲って3番手で直線はいるも伸びずにビリ\n評価が難しいなこの馬は"
+      },
+      {
+        "frame": 5,
+        "number": 5,
+        "horse_name": "レイデラルース",
+        "jockey": "杉原",
+        "weight": 54,
+        "finish": 4,
+        "memo": "差し展開向いての5着\n評価できない"
+      },
+      {
+        "frame": 6,
+        "number": 6,
+        "horse_name": "キングズトゥルー",
+        "jockey": "丸田",
+        "weight": 55,
+        "finish": 6,
+        "memo": "差し展開が向いての2着\n1着馬とは能力の差がある走り"
+      },
+      {
+        "frame": 7,
+        "number": 7,
+        "horse_name": "ジュンツバメガエシ",
+        "jockey": "戸崎圭",
+        "weight": 57,
+        "finish": 8,
+        "memo": "まくりが入りこの馬には厳しい展開\nロンスパ戦には向かないかな"
+      },
+      {
+        "frame": 8,
+        "number": 8,
+        "horse_name": "イクリール",
+        "jockey": "原",
+        "weight": 56,
+        "finish": 3,
+        "memo": "1番強い競馬をした。\nまくりが入り、第4コーナーで2頭にせりかけるも伸びなおして3着確保。\nロンスパ戦になればこの馬の持続力はすごい"
+      },
+      {
+        "frame": 8,
+        "number": 9,
+        "horse_name": "ノーブルクライ",
+        "jockey": "丹内",
+        "weight": 54,
+        "finish": 7,
+        "memo": "買い要素なし"
+      }
+    ]
+  },
+  {
+    "id": 1791636819202,
+    "race_date": "2026-10-10",
+    "race_name": "サウジアラビアRC",
+    "racecourse": "東京",
+    "race_number": 11,
+    "course": "芝",
+    "distance": 1600,
+    "weather": "晴",
+    "ground": "良",
+    "pace": "スローペース",
+    "bias": "前有利",
+    "race_memo": "勝ち時計　1;34.4　馬場はかなりきれいで内外フラット\n1000m　1:00.1\nレースレベルはかなり低いな。重賞レベルではない\n勝ち馬アゴルディーノ、フィリオソラーレがスローを差してきてるので評価\nベルウッドディープは前開いた瞬間の加速は評価で再見直し\n穴で注目はギブリ\n",
+    "horses": [
+      {
+        "frame": 1,
+        "number": 1,
+        "horse_name": "ギブリ",
+        "jockey": "横山典",
+        "weight": 56,
+        "finish": 8,
+        "memo": "最後手ごたえはまだありそうだが内で前壁で追えず\n見直し可能かな。"
+      },
+      {
+        "frame": 2,
+        "number": 2,
+        "horse_name": "デミアン",
+        "jockey": "斎藤",
+        "weight": 56,
+        "finish": 9,
+        "memo": "出遅れ。伸びもいまいち\n新馬は強かったのに、、\n次走、確認したい"
+      },
+      {
+        "frame": 3,
+        "number": 3,
+        "horse_name": "サトノハクマイ",
+        "jockey": "戸崎圭",
+        "weight": 56,
+        "finish": 2,
+        "memo": "展開は向いたものの、うちの狭いところでラチにぶつかるもそこから伸びて2着\n勝負根性あるし、レースセンスあるから安定感ありそう"
+      },
+      {
+        "frame": 4,
+        "number": 4,
+        "horse_name": "アゴルディーノ",
+        "jockey": "横山和",
+        "weight": 56,
+        "finish": 1,
+        "memo": "出遅れから30mほど押した。\n最後は大外一気で1着と展開と逆行した走り。強いです"
+      },
+      {
+        "frame": 5,
+        "number": 5,
+        "horse_name": "フィリオソラーレ",
+        "jockey": "ルメール",
+        "weight": 56,
+        "finish": 2,
+        "memo": "パドックから発汗あり。\n展開と逆行して差してきて3着とある程度評価必要"
+      },
+      {
+        "frame": 6,
+        "number": 6,
+        "horse_name": "ベルウッドディープ",
+        "jockey": "三浦",
+        "weight": 56,
+        "finish": 5,
+        "memo": "一生前壁で度外視可能。\n前が明けてからの脚はかなり良い"
+      },
+      {
+        "frame": 6,
+        "number": 7,
+        "horse_name": "ニシノトラノスケ",
+        "jockey": "菊沢",
+        "weight": 56,
+        "finish": 10,
+        "memo": "出遅れ。買い要素なし"
+      },
+      {
+        "frame": 7,
+        "number": 8,
+        "horse_name": "グルーヴェンス",
+        "jockey": "横山武",
+        "weight": 56,
+        "finish": 4,
+        "memo": "前有利展開を前目で進んで4着\n1600は長いかな"
+      },
+      {
+        "frame": 7,
+        "number": 9,
+        "horse_name": "ジップスパーク",
+        "jockey": "田辺",
+        "weight": 56,
+        "finish": 6,
+        "memo": "普通に力負け。切れあるタイプじゃない\nタフなほうが合いそう"
+      },
+      {
+        "frame": 8,
+        "number": 10,
+        "horse_name": "アイファーマーリン",
+        "jockey": "松岡",
+        "weight": 56,
+        "finish": 7,
+        "memo": "買い要素なし\n東京じゃ買えない"
+      },
+      {
+        "frame": 8,
+        "number": 11,
+        "horse_name": "ハンサム",
+        "jockey": "丹内",
+        "weight": 56,
+        "finish": "",
+        "memo": "切れる良馬場よりもタフなほうがよさそう。\nまた、前走からすぐなので体調も万全じゃなかった様子。\n騎手も最後、追ってない"
+      }
+    ]
   }
 ]
