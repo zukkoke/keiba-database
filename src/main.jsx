@@ -1368,6 +1368,7 @@ function AdminPage(props) {
   const [horses, setHorses] = useState([
     { ...emptyHorse }
   ])
+  const [editingRaceId, setEditingRaceId] = useState(null)
 
   // 登録済みレース検索
   const [registeredRaceQuery, setRegisteredRaceQuery] = useState('')
@@ -1407,6 +1408,53 @@ function AdminPage(props) {
     })
   }
 
+  function resetRaceForm() {
+    setEditingRaceId(null)
+    setRaceDate('')
+    setRacecourse('')
+    setRaceNumber('')
+    setRaceName('')
+    setCourse('芝')
+    setDistance('')
+    setWeather('')
+    setGround('')
+    setPace('')
+    setBias('')
+    setRaceMemo('')
+    setHorses([{ ...emptyHorse }])
+  }
+
+  function editRace(race) {
+    setEditingRaceId(race.id)
+    setRaceDate(String(race.race_date || ''))
+    setRacecourse(String(race.racecourse || ''))
+    setRaceNumber(String(race.race_number || ''))
+    setRaceName(String(race.race_name || ''))
+    setCourse(race.course || '芝')
+    setDistance(String(race.distance || ''))
+    setWeather(String(race.weather || ''))
+    setGround(String(race.ground || ''))
+    setPace(String(race.pace || ''))
+    setBias(String(race.bias || ''))
+    setRaceMemo(String(race.race_memo || ''))
+    setHorses(
+      Array.isArray(race.horses) && race.horses.length
+        ? race.horses.map(function (horse) {
+            return {
+              frame: horse.frame ?? '',
+              number: horse.number ?? '',
+              horse_name: horse.horse_name || '',
+              jockey: horse.jockey || '',
+              weight: horse.weight ?? '',
+              finish: horse.finish ?? '',
+              memo: horse.memo || ''
+            }
+          })
+        : [{ ...emptyHorse }]
+    )
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   function saveRace() {
 
     if (
@@ -1434,7 +1482,7 @@ function AdminPage(props) {
     }
 
     const newRace = {
-      id: Date.now(),
+      id: editingRaceId !== null ? editingRaceId : Date.now(),
 
       race_date: raceDate,
       race_name: raceName,
@@ -1462,29 +1510,21 @@ function AdminPage(props) {
       })
     }
 
-    const newRaces = [
-      ...props.races,
-      newRace
-    ]
+    let newRaces
+    if (editingRaceId !== null) {
+      newRaces = props.races.map(function (existingRace) {
+        if (existingRace.id !== editingRaceId) return existingRace
+        return { ...existingRace, ...newRace, id: existingRace.id }
+      })
+      props.onSave(newRaces)
+      alert('レース情報を更新しました！')
+    } else {
+      newRaces = [...props.races, newRace]
+      props.onSave(newRaces)
+      alert('レースを保存しました！')
+    }
 
-    props.onSave(newRaces)
-
-    alert('レースを保存しました！')
-
-    setRaceDate('')
-    setRacecourse('')
-    setRaceNumber('')
-    setRaceName('')
-    setCourse('芝')
-    setDistance('')
-    setWeather('')
-    setGround('')
-    setPace('')
-    setBias('')
-    setRaceMemo('')
-    setHorses([
-      { ...emptyHorse }
-    ])
+    resetRaceForm()
   }
 
   // レース1件削除
@@ -1664,9 +1704,20 @@ function AdminPage(props) {
 
       <div className="adminCard">
 
-        <h3>
-          レース情報
-        </h3>
+        <div className="adminCardHeader">
+          <h3>
+            {editingRaceId !== null ? 'レース情報を編集' : 'レース情報'}
+          </h3>
+          {editingRaceId !== null && (
+            <button
+              type="button"
+              className="secondaryBtn"
+              onClick={resetRaceForm}
+            >
+              編集をキャンセル
+            </button>
+          )}
+        </div>
 
         <div className="adminGrid">
 
@@ -2011,7 +2062,7 @@ function AdminPage(props) {
           className="primary adminSaveBtn"
           onClick={saveRace}
         >
-          💾 このレースを保存
+          {editingRaceId !== null ? '💾 編集内容を更新' : '💾 このレースを保存'}
         </button>
 
         <button
@@ -2217,15 +2268,26 @@ function AdminPage(props) {
                     </div>
 
 
-                    <button
-                      type="button"
-                      className="deleteBtn"
-                      onClick={function () {
-                        deleteRace(race.id)
-                      }}
-                    >
-                      🗑️ このレースを削除
-                    </button>
+                    <div className="adminActions">
+                      <button
+                        type="button"
+                        className="secondaryBtn"
+                        onClick={function () {
+                          editRace(race)
+                        }}
+                      >
+                        ✏️ このレースを編集
+                      </button>
+                      <button
+                        type="button"
+                        className="deleteBtn"
+                        onClick={function () {
+                          deleteRace(race.id)
+                        }}
+                      >
+                        🗑️ このレースを削除
+                      </button>
+                    </div>
 
 
                     <div className="registeredHorseList">
